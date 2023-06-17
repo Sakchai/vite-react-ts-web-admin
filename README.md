@@ -29,8 +29,8 @@ The best practices for About web admin with React.js, TypeScript, Vite.js, C#, .
 
 ## ⚡preview
 
-![Dashboard.png](https://github.com/Sakchai/vite-react-ts-web-admin/screenshot/Dashboard.png)
-![Tables.png](https://github.com/Sakchai/vite-react-ts-web-admin/screenshot/Tables.png)
+![Dashboard.png](https://github.com/Sakchai/vite-react-ts-web-admin/blob/master/screenshot/Dashboard.png)
+![Tables.png](https://github.com/Sakchai/vite-react-ts-web-admin/blob/master/screenshot/Tables.png)
 
 ## 📦 Install
 
