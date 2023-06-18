@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import ProductOne from '../images/product/product-01.png';
-import axios from 'axios';
 
 interface WeatherForecast {
   date: string;
@@ -22,8 +21,16 @@ const TableTwo = () => {
             return;
           }                 
           // Set the token in the request headers
-          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-          const response = await axios.get('/WeatherForecast');          
+
+          const settings = {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+          };
+          const response = await fetch('/WeatherForecast', settings);   
           const data = await response.json();
           setForecast(data);
         } catch (error) {

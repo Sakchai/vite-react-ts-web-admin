@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumb';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { toast } from "react-toastify";
-import axios from 'axios';
 
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const history = useHistory();
+  const history = useNavigate();
 
   useEffect(()=>{
       sessionStorage.clear();
@@ -23,7 +22,7 @@ const SignIn = () => {
 
           const inputobj = {"email": email,
           "password": password};
-          fetch("https://localhost:7156/api/Auth/Login",{
+          fetch("/Auth/Login",{
               method:'POST',
               headers:{'content-type':'application/json'},
               body:JSON.stringify(inputobj)

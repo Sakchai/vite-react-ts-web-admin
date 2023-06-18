@@ -9,7 +9,7 @@ using Net6_Controller_And_VIte.Services;
 
 namespace Net6_Controller_And_VIte.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -53,23 +53,23 @@ namespace Net6_Controller_And_VIte.Controllers
         [HttpPost("login")]
         public ActionResult<string> Login(UserDto request)
         {
-            if (user.Email != request.Email)
+            if (string.IsNullOrEmpty(request.Email))
             {
-                return BadRequest("User not found.");
+                return BadRequest("User is blank.");
             }
 
-            if (!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+            if (string.IsNullOrEmpty(request.Password))
             {
-                return BadRequest("Wrong password.");
+                return BadRequest("Password is blank.");
             }
 
-            string token = CreateToken(user);
+            string token = CreateToken(request);
             
 
             return Ok(token);
         }
 
-        private string CreateToken(User user)
+        private string CreateToken(UserDto user)
         {
             List<Claim> claims = new List<Claim> {
                 new Claim(ClaimTypes.Name, user.Email),
