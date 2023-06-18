@@ -34,10 +34,12 @@ The best practices for About web admin with React.js, TypeScript, Vite.js, C#, .
 
 ## 📦 Install
 
+
 ```bash
 $ git clone https://github.com/Sakchai/vite-react-ts-web-admin.git
 $ cd vite-react-ts-web-admin
 
+dotnet user-jwts create
 
 # yarn
 $ yarn install
