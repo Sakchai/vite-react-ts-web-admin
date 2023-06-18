@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ProductOne from '../images/product/product-01.png';
-
+import axios from 'axios';
 
 interface WeatherForecast {
   date: string;
@@ -15,7 +15,15 @@ const TableTwo = () => {
     // Fetch weather forecast data
       const fetchWeatherForecast = async () => {
         try {
-          const response = await fetch('/WeatherForecast');
+          const token = localStorage.getItem('token');   
+          if (!token) {
+            // Redirect to login if token is not available
+            // You can customize this behavior based on your application's requirements
+            return;
+          }                 
+          // Set the token in the request headers
+          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+          const response = await axios.get('/WeatherForecast');          
           const data = await response.json();
           setForecast(data);
         } catch (error) {

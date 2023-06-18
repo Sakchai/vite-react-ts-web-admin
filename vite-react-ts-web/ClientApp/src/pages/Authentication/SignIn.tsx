@@ -1,51 +1,44 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumb';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { toast } from "react-toastify";
+import axios from 'axios';
 
-
-interface User {
-  email: string;
-  passwordHash : string;
-}
 
 const SignIn = () => {
-  const [user, setUser] = useState<User | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const usenavigate=useNavigate();
+  const history = useHistory();
 
   useEffect(()=>{
       sessionStorage.clear();
   },[]);
 
-  const ProceedLogin = (e) => {
-      e.preventDefault();
+  const handleLogin = async () => {
       if (validate()) {
 
           const inputobj = {"email": email,
           "password": password};
-          fetch("https://localhost:44308/api/Auth",{
+          fetch("https://localhost:7156/api/Auth/Login",{
               method:'POST',
               headers:{'content-type':'application/json'},
               body:JSON.stringify(inputobj)
           }).then((res) => {
               return res.json();
-          }).then((resp) => {
-              console.log(resp)
-              if (Object.keys(resp).length === 0) {
+          }).then((response) => {
+              console.log(response)
+              if (Object.keys(response).length === 0) {
                   toast.error('Login failed, invalid credentials');
               }else{
                    toast.success('Success');
+                   const token = response.data.token;
                    sessionStorage.setItem('email',email);
-                   sessionStorage.setItem('passwordHash',resp.passwordHash);
-                   const user = resp;
-                   setUser(user);
-                 usenavigate('/')
+                   sessionStorage.setItem('token',token);
+                   history.push('/tables');
               }
 
           }).catch((err) => {
@@ -215,7 +208,7 @@ const SignIn = () => {
                 Sign In to TailAdmin
               </h2>
 
-              <form onSubmit={ProceedLogin}>
+              <form onSubmit={handleLogin}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Email

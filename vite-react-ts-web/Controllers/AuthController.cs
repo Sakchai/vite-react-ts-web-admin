@@ -51,7 +51,7 @@ namespace Net6_Controller_And_VIte.Controllers
         }
 
         [HttpPost("login")]
-        public ActionResult<User> Login(UserDto request)
+        public ActionResult<string> Login(UserDto request)
         {
             if (user.Email != request.Email)
             {
@@ -66,11 +66,7 @@ namespace Net6_Controller_And_VIte.Controllers
             string token = CreateToken(user);
             
 
-            return Ok(new User
-            {
-                Email = request.Email,
-                PasswordHash = token
-            });
+            return Ok(token);
         }
 
         private string CreateToken(User user)
